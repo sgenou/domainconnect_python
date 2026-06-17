@@ -530,21 +530,12 @@ class DomainConnect:
                                              url=url_get_access_token,
                                              accepted_statuses=[200, 400]
                                              )
-            
-            # Handle IONOS API non-standard response format
-            # IONOS returns a list instead of dict in some cases
-            if isinstance(data, list) and len(data) > 0:
-                logger.debug('API returned a list, converting to dict: {}'.format(data))
-                data = data[0]
-            
             if status == 400:
-                # Handle both standard and IONOS error formats
-                # Standard: {"error": "...", "error_description": "..."}
-                # IONOS: {"message": "...", "code": "..."}
-                error_msg = data.get("message", data.get("error", "Unknown error"))
-                error_code = data.get("code", data.get("error_description", ""))
                 raise AsyncTokenException(
-                    'Failed to get async token: {} - {} ({})'.format(status, error_msg, error_code))
+                    'Failed to get async token: {} {} {}'.format(
+                            status,
+                            data["error"],
+                            data["error_description"] if "error_description" in data else ""))
         except AsyncTokenException:
             raise
         except Exception as ex:
