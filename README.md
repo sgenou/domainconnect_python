@@ -1,15 +1,51 @@
-[![Build Status](https://travis-ci.com/Domain-Connect/domainconnect_python.svg?branch=master)](https://travis-ci.com/Domain-Connect/domainconnect_python)
+[![PyPI version](https://badge.fury.io/py/domain-connect.svg)](https://badge.fury.io/py/domain-connect)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/)
 
-# domain-connect
-Python client library for Domain Connect protocol.
-For details of the protocol, please visit: https://domainconnect.org
+# Domain Connect Python Library
 
-Library offers Service Provider functionality in both Sync and Async mode.
+Python client library for the [Domain Connect](https://domainconnect.org) protocol. This library provides Service Provider functionality in both **Sync** and **Async** modes.
 
-## Specification reference
-https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc
-- Version: 2.1
-- Revision: 52
+## 📋 Table of Contents
+
+- [About Domain Connect](#about-domain-connect)
+- [Installation](#installation)
+- [Specification Reference](#specification-reference)
+- [Usage](#usage)
+  - [Sync Flow](#sync-flow)
+  - [Async Flow](#async-flow)
+  - [Signed Requests](#sync-flow-with-signed-request)
+- [DNS Provider Compatibility](#dns-provider-compatibility)
+- [Configuration](#configuration)
+- [Contributing](#contributing)
+- [Changelog](#changelog)
+- [License](#license)
+
+## About Domain Connect
+
+Domain Connect is an open standard that simplifies the process of connecting domains to third-party services. For full protocol details, visit: https://domainconnect.org
+
+## Installation
+
+Install via pip:
+
+```bash
+pip install domain-connect
+```
+
+Or from source:
+
+```bash
+git clone https://github.com/Domain-Connect/domainconnect_python.git
+cd domainconnect_python
+python setup.py install
+```
+
+## Specification Reference
+
+- **Specification**: https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc
+- **Version**: 2.1
+- **Revision**: 52
 
 
 ## Usage
@@ -138,17 +174,72 @@ dc = DomainConnect(
     )
 ```
 
+## DNS Provider Compatibility
+
+This library is compatible with all DNS providers that support the Domain Connect protocol, including:
+
+- **GoDaddy** ✅
+- **1&1 IONOS** ✅
+- **1&1** ✅
+- **And many more** - see [domainconnect.org](https://domainconnect.org) for the full list
+
+### IONOS-specific Notes
+
+IONOS has a slightly non-standard API implementation. This library handles these differences automatically:
+- Response format differences (list vs dict)
+- Alternative error field names (`message`/`code` instead of `error`/`error_description`)
+
+No special configuration is needed—the library adapts automatically.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+### Development Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/Domain-Connect/domainconnect_python.git
+cd domainconnect_python
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run tests
+python -m pytest
+```
+
 ## TODOs
-- support for provider_name (for shared templates)
-- async revert
+
+- Support for provider_name (for shared templates)
+- Async revert functionality
 
 ## CHANGELOG
-| version | date       | changes                                                                         |
+
+| Version | Date       | Changes                                                                         |
 |---------|------------|---------------------------------------------------------------------------------|
+| 0.0.12  | 2026-06-17 | BUGFIX: IONOS API compatibility - handle list responses and alternate error keys |
 | 0.0.11  | 2024-02-18 | DEPENDENCIES: updated cryptography to the highest one for newer python versions |
 | 0.0.10  | 2024-02-18 | DEPENDENCIES: updated cryptography for newer python versions                    |
 | 0.0.9   | 2021-04-13 | NEW FEATURE: support for openwrt (missing webbrowser module)                    |
 | 0.0.8   | 2020-11-09 | NEW FEATURE: Detailed information on access token request fail                  |
-| 0.0.7   | 2019-10-29 | Bugfix: error when setting up .app domain                                       |
-| 0.0.6   | 2019-07-05 | UPDATE: moved from pycrypto to cryptography (due to know security issues)       |
+| 0.0.7   | 2019-10-29 | BUGFIX: error when setting up .app domain                                       |
+| 0.0.6   | 2019-07-05 | UPDATE: moved from pycrypto to cryptography (due to known security issues)      |
 | 0.0.5   | 2019-03-12 | NEW FEATURE: url signing capability added                                       |
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Links
+
+- **Project Homepage**: https://domainconnect.org
+- **Specification**: https://github.com/Domain-Connect/spec
+- **PyPI Package**: https://pypi.org/project/domain-connect/
+- **Issue Tracker**: https://github.com/Domain-Connect/domainconnect_python/issues
+
+## Support
+
+For questions and support:
+- Open an issue on [GitHub](https://github.com/Domain-Connect/domainconnect_python/issues)
+- Visit the [Domain Connect website](https://domainconnect.org)
